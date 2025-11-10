@@ -5,6 +5,11 @@ import sys
 import io
 import psutil
 import multiprocessing
+from utilities import run_all_benchmarks
+
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+
 
 try:
     from hardware_info import display_hardware_info
@@ -60,7 +65,8 @@ class BenchmarkApp:
         self.live_data_running = False
         self.live_data_label = None
         self.live_data_window = None
-
+        self.cpu_data = []
+        self.ram_data = []
         top_frame = ttk.Frame(root, padding="10")
         top_frame.pack(fill='x', side='top')
 
@@ -200,16 +206,33 @@ class BenchmarkApp:
                 self.live_data_window = None
 
         self.live_data_window = tk.Toplevel(self.root)
-        self.live_data_window.title("Live System Data")
+        self.live_data_window.title("Live System Data Plot")
+        self.live_data_window.geometry("600x500")
 
-        self.live_data_label = tk.Label(self.live_data_window, text="Loading...", font=("Arial", 14), justify=tk.LEFT,
-                                        padx=20, pady=20)
-        self.live_data_label.pack(anchor='nw')
+        # --- Partea mea (TKINTER) ---
+        # Aici construiesc "casa" pentru graficul tău
+
+        # 1. Creez o Figurina Matplotlib
+        self.live_data_figure = Figure(figsize=(6, 4), dpi=100)
+        self.live_data_plot = self.live_data_figure.add_subplot(111)
+
+        # 2. Creez "ecranul" (Canvas) Tkinter care va afișa figurina
+        self.live_data_canvas = FigureCanvasTkAgg(self.live_data_figure, master=self.live_data_window)
+
+        # 3. Creez bara de unelte (Toolbar)
+        toolbar = NavigationToolbar2Tk(self.live_data_canvas, self.live_data_window)
+        toolbar.update()
+
+        # 4. Așez "ecranul" și bara de unelte în fereastră
+        self.live_data_canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+
+        # --- Sfârșitul părții mele ---
 
         self.center_window(self.live_data_window)
-
         self.live_data_running = True
-        self.update_live_data()
+        self.cpu_data.clear()  # Golesc datele vechi
+        self.ram_data.clear()  # Golesc datele vechi
+        self.update_live_data_plot()
 
         self.live_data_window.protocol("WM_DELETE_WINDOW", self.on_closing_live_window)
 
@@ -219,20 +242,39 @@ class BenchmarkApp:
             self.live_data_window.destroy()
         self.live_data_window = None
 
-    def update_live_data(self):
-        if not self.live_data_running:
-            return
-
+    def update_live_data_plot(self):
         try:
+            if not self.live_data_running:
+                return
             cpu = psutil.cpu_percent()
             ram = psutil.virtual_memory().percent
-            if self.live_data_label:
-                self.live_data_label.config(text=f"CPU: {cpu:02.1f} %\nRAM: {ram:02.1f} %")
-        except Exception as e:
-            if self.live_data_label:
-                self.live_data_label.config(text=f"Error: {e}")
+            self.cpu_data.append(cpu)
+            self.ram_data.append(ram)
 
-        self.root.after(1000, self.update_live_data)
+            if len(self.cpu_data) > 50:
+                self.cpu_data.pop(0)
+            if len(self.ram_data) > 50:
+                self.ram_data.pop(0)
+
+            self.live_data_plot.clear()
+
+            self.live_data_plot.plot(self.cpu_data, label='CPU %')
+            self.live_data_plot.plot(self.ram_data, label='RAM %')
+
+            self.live_data_plot.set_title("Live CPU and RAM Usage")
+            self.live_data_plot.set_ylabel("Usage (%)")
+            self.live_data_plot.set_ylim(0, 100)
+            self.live_data_plot.legend()
+
+            self.live_data_canvas.draw()
+
+            self.root.after(1000, self.update_live_data_plot)
+
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            pass
+        except tk.TclError:
+            self.live_data_running = False
+            self.live_data_window = None
 
     def on_closing(self):
         print("\nShutting down...")
