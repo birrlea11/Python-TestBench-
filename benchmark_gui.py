@@ -4,6 +4,7 @@ from tkinter.scrolledtext import ScrolledText
 import sys
 import io
 import psutil
+import multiprocessing
 
 try:
     from hardware_info import display_hardware_info
@@ -11,6 +12,7 @@ try:
     from calculPi import run_float_benchmark, ITERATIONS_FLOAT_BENCHMARK
     from io_benchmark import run_io_test
     from Main import run_all_benchmarks
+    from multi_core import run_multi_core_benchmark
 except ImportError as e:
     print(f"Error: Could not import necessary files. Make sure all .py files are in the same folder.")
     print(f"Details: {e}")
@@ -72,8 +74,9 @@ class BenchmarkApp:
         output_frame.pack(fill='both', expand=True, side='bottom', padx=10, pady=(0, 10))
 
         self.add_button(button_frame, "Get Hardware Info", self.run_hw_info)
-        self.add_button(button_frame, "Test: Integer Ops (Eratostene)", self.run_integer_test)
-        self.add_button(button_frame, "Test: Float Ops (Calcul Pi)", self.run_float_test)
+        self.add_button(button_frame, "Test: Single-Core Integer", self.run_integer_test)
+        self.add_button(button_frame, "Test: Single-Core Float", self.run_float_test)
+        self.add_button(button_frame, "Test: Multi-Core (Stres CPU)", self.run_multi_core_test)
         self.add_button(button_frame, "Test: I/O Ops (Disk)", self.run_io_test)
         self.add_button(button_frame, "Run FULL Testbench", self.run_all_tests)
 
@@ -137,7 +140,7 @@ class BenchmarkApp:
         popup.grab_set()
         popup.resizable(False, False)
 
-        self.center_window(popup)  # <-- Modificarea e aici
+        self.center_window(popup)
 
         return popup
 
@@ -145,8 +148,7 @@ class BenchmarkApp:
         self.set_buttons_state('disabled')
         popup = self.create_popup("Running test... Please wait.\nThe GUI will be unresponsive.")
 
-        # FOARTE IMPORTANT: Forțează desenarea pop-up-ului ACUM
-        self.root.update()  # <-- Aceasta e linia crucială
+        self.root.update()
 
         self.clear_output()
         print(f"Starting test: {target_function.__name__}...\n" + "=" * 30 + "\n")
@@ -180,6 +182,9 @@ class BenchmarkApp:
 
         self.run_test_blocking(float_test_target)
 
+    def run_multi_core_test(self):
+        self.run_test_blocking(run_multi_core_benchmark)
+
     def run_io_test(self):
         self.run_test_blocking(run_io_test)
 
@@ -201,7 +206,7 @@ class BenchmarkApp:
                                         padx=20, pady=20)
         self.live_data_label.pack(anchor='nw')
 
-        self.center_window(self.live_data_window)  # <-- Modificarea e aici
+        self.center_window(self.live_data_window)
 
         self.live_data_running = True
         self.update_live_data()
@@ -237,7 +242,3 @@ class BenchmarkApp:
         self.root.destroy()
 
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = BenchmarkApp(root)
-    root.mainloop()
