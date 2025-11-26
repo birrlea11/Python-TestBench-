@@ -4,12 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e39e0d0-d9c4-4dfe-83c2-1107fdc093e3" name="Changes" comment="GUI Mockup">
-      <change afterPath="$PROJECT_DIR$/utilities.py" afterDir="false" />
+    <list default="true" id="1e39e0d0-d9c4-4dfe-83c2-1107fdc093e3" name="Changes" comment="graphics with matplotlib">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CiurulLuiEratostene.py" beforeDir="false" afterPath="$PROJECT_DIR$/CiurulLuiEratostene.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/benchmark_gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/benchmark_gui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/calculPi.py" beforeDir="false" afterPath="$PROJECT_DIR$/calculPi.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/io_benchmark.py" beforeDir="false" afterPath="$PROJECT_DIR$/io_benchmark.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/multi_core.py" beforeDir="false" afterPath="$PROJECT_DIR$/multi_core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/utilities.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,8 +43,11 @@
     &quot;Python.CiurulLuiEratostene.executor&quot;: &quot;Run&quot;,
     &quot;Python.Main.executor&quot;: &quot;Run&quot;,
     &quot;Python.benchmark_gui.executor&quot;: &quot;Run&quot;,
+    &quot;Python.calculPi.executor&quot;: &quot;Run&quot;,
     &quot;Python.io_benchmark.executor&quot;: &quot;Run&quot;,
     &quot;Python.multi_core.executor&quot;: &quot;Run&quot;,
+    &quot;Python.testare.executor&quot;: &quot;Run&quot;,
+    &quot;Python.utilities.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/IA/search&quot;,
@@ -79,7 +85,16 @@
       <workItem from="1762614845737" duration="1890000" />
       <workItem from="1762755473625" duration="1476000" />
       <workItem from="1762783639619" duration="5985000" />
-      <workItem from="1762796172749" duration="3045000" />
+      <workItem from="1762796172749" duration="4101000" />
+      <workItem from="1762809157080" duration="1359000" />
+      <workItem from="1762898511194" duration="6116000" />
+      <workItem from="1762949623198" duration="3471000" />
+      <workItem from="1763359809035" duration="2512000" />
+      <workItem from="1763935019515" duration="1805000" />
+      <workItem from="1764008744286" duration="6685000" />
+      <workItem from="1764074277703" duration="1246000" />
+      <workItem from="1764109063103" duration="5492000" />
+      <workItem from="1764149498590" duration="1284000" />
     </task>
     <task id="LOCAL-00001" summary="GUI Mockup">
       <option name="closed" value="true" />
@@ -97,7 +112,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762784458531</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="graphics with matplotlib">
+      <option name="closed" value="true" />
+      <created>1762800351078</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1762800351078</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -122,13 +145,17 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="GUI Mockup" />
-    <option name="LAST_COMMIT_MESSAGE" value="GUI Mockup" />
+    <MESSAGE value="graphics with matplotlib" />
+    <option name="LAST_COMMIT_MESSAGE" value="graphics with matplotlib" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/testbench$Main.coverage" NAME="Main Coverage Results" MODIFIED="1762798297860" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/testbench$io_benchmark.coverage" NAME="io_benchmark Coverage Results" MODIFIED="1762788335395" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/testbench$benchmark_gui.coverage" NAME="benchmark_gui Coverage Results" MODIFIED="1762796404309" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/testbench$multi_core.coverage" NAME="multi_core Coverage Results" MODIFIED="1762616407621" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/testbench$CiurulLuiEratostene.coverage" NAME="CiurulLuiEratostene Coverage Results" MODIFIED="1761596881127" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/testbench$Main.coverage" NAME="Main Coverage Results" MODIFIED="1764149548306" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/testbench$io_benchmark.coverage" NAME="io_benchmark Coverage Results" MODIFIED="1764074362928" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/testbench$benchmark_gui.coverage" NAME="benchmark_gui Coverage Results" MODIFIED="1764109103998" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/testbench$multi_core.coverage" NAME="multi_core Coverage Results" MODIFIED="1764019706011" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/testbench$calculPi.coverage" NAME="calculPi Coverage Results" MODIFIED="1764009406134" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/testbench$utilities.coverage" NAME="utilities Coverage Results" MODIFIED="1764114220744" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/testbench$testare.coverage" NAME="testare Coverage Results" MODIFIED="1762951476604" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/testbench$CiurulLuiEratostene.coverage" NAME="CiurulLuiEratostene Coverage Results" MODIFIED="1764013180665" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

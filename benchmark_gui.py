@@ -1,41 +1,24 @@
+import os
 import tkinter as tk
 from tkinter import ttk
 from tkinter.scrolledtext import ScrolledText
 import sys
 import io
+from os import walk
 import psutil
-import multiprocessing
-from utilities import run_all_benchmarks
 
+from utilities import run_all_benchmarks
+from PIL import Image
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+from matplotlib import pyplot as plt
+from matplotlib import image as mpimg
+from hardware_info import display_hardware_info
+from CiurulLuiEratostene import run_ciurul_lui_Eratostene, LIMIT, run_ciur_and_plot
+from calculPi import run_float_benchmark, ITERATIONS_FLOAT_BENCHMARK, run_benchmark_and_plot
+from io_benchmark import run_io_test
+from multi_core import run_multi_core_benchmark
 
-
-try:
-    from hardware_info import display_hardware_info
-    from CiurulLuiEratostene import run_ciurul_lui_Eratostene, LIMIT
-    from calculPi import run_float_benchmark, ITERATIONS_FLOAT_BENCHMARK
-    from io_benchmark import run_io_test
-    from Main import run_all_benchmarks
-    from multi_core import run_multi_core_benchmark
-except ImportError as e:
-    print(f"Error: Could not import necessary files. Make sure all .py files are in the same folder.")
-    print(f"Details: {e}")
-
-
-    class App:
-        def __init__(self, root):
-            root.title("Import Error")
-            tk.Label(root,
-                     text=f"Error: Could not import files.\n{e}\n\nMake sure all .py files are in the same folder.",
-                     justify=tk.LEFT, padx=10, pady=10).pack()
-
-
-    if __name__ == "__main__":
-        root = tk.Tk()
-        app = App(root)
-        root.mainloop()
-        sys.exit()
 
 
 class TextRedirector(io.TextIOBase):
@@ -53,6 +36,11 @@ class TextRedirector(io.TextIOBase):
             self.widget.configure(state='disabled')
         except tk.TclError:
             pass
+
+
+def open_png(file_name):
+    image = Image.open(file_name)
+    image.show()
 
 
 class BenchmarkApp:
@@ -82,13 +70,31 @@ class BenchmarkApp:
         self.add_button(button_frame, "Get Hardware Info", self.run_hw_info)
         self.add_button(button_frame, "Test: Single-Core Integer", self.run_integer_test)
         self.add_button(button_frame, "Test: Single-Core Float", self.run_float_test)
-        self.add_button(button_frame, "Test: Multi-Core (Stres CPU)", self.run_multi_core_test)
+        self.add_button(button_frame, "Test: Multi-Core (Stress CPU)", self.run_multi_core_test)
         self.add_button(button_frame, "Test: I/O Ops (Disk)", self.run_io_test)
         self.add_button(button_frame, "Run FULL Testbench", self.run_all_tests)
 
         live_button = ttk.Button(live_button_frame, text="Show Live Data", command=self.open_live_data_window)
         live_button.pack(pady=5, anchor='n')
         self.buttons.append(live_button)
+
+
+        project_root = os.path.dirname(os.path.abspath(__file__))
+
+        try:
+            for root_dir, dirs, files in os.walk(project_root):
+                if '.venv' in root_dir or '__pycache__' in root_dir or '.git' in root_dir:
+                    continue
+
+                for file in files:
+                    if file.endswith('.png'):
+                        btn_text = f"Open {file}"
+                        b = ttk.Button(live_button_frame, text=btn_text, command=lambda f=file: open_png(f))
+                        b.pack(pady=2, anchor='n')
+                        self.buttons.append(b)
+        except Exception as e:
+            print(f"Warning: Could not scan files: {e}")
+
 
         self.output_text = ScrolledText(output_frame, state='disabled', height=10, bg="#2b2b2b", fg="#f0f0f0",
                                         font=("Consolas", 10))
@@ -163,7 +169,6 @@ class BenchmarkApp:
             target_function(*args)
             print("\n" + "=" * 30 + f"\n...Test {target_function.__name__} finished.")
         except Exception as e:
-            print(f"\n--- ERROR during test ---")
             print(f"An exception occurred: {e}")
         finally:
             popup.destroy()
@@ -174,7 +179,7 @@ class BenchmarkApp:
 
     def run_integer_test(self):
         def int_test_target():
-            result = run_ciurul_lui_Eratostene(LIMIT)
+            result = run_ciur_and_plot(LIMIT)
             print(f"\n--- Rezultat Ciurul lui Eratostene ---")
             print(f"Timpul minim: {result:.6f} secunde")
 
@@ -182,9 +187,12 @@ class BenchmarkApp:
 
     def run_float_test(self):
         def float_test_target():
-            result = run_float_benchmark()
+            # Call the new function that handles the plot internally
+            result = run_benchmark_and_plot()
+
             print(f"\n--- Rezultat Calcul Pi ---")
             print(f"Timpul minim: {result:.6f} secunde")
+            print("Graficul a fost salvat (calculate_pi.png) si afisat.")
 
         self.run_test_blocking(float_test_target)
 
@@ -209,29 +217,22 @@ class BenchmarkApp:
         self.live_data_window.title("Live System Data Plot")
         self.live_data_window.geometry("600x500")
 
-        # --- Partea mea (TKINTER) ---
-        # Aici construiesc "casa" pentru graficul tău
 
-        # 1. Creez o Figurina Matplotlib
         self.live_data_figure = Figure(figsize=(6, 4), dpi=100)
         self.live_data_plot = self.live_data_figure.add_subplot(111)
 
-        # 2. Creez "ecranul" (Canvas) Tkinter care va afișa figurina
         self.live_data_canvas = FigureCanvasTkAgg(self.live_data_figure, master=self.live_data_window)
 
-        # 3. Creez bara de unelte (Toolbar)
         toolbar = NavigationToolbar2Tk(self.live_data_canvas, self.live_data_window)
         toolbar.update()
 
-        # 4. Așez "ecranul" și bara de unelte în fereastră
         self.live_data_canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
-        # --- Sfârșitul părții mele ---
 
         self.center_window(self.live_data_window)
         self.live_data_running = True
-        self.cpu_data.clear()  # Golesc datele vechi
-        self.ram_data.clear()  # Golesc datele vechi
+        self.cpu_data.clear()
+        self.ram_data.clear()
         self.update_live_data_plot()
 
         self.live_data_window.protocol("WM_DELETE_WINDOW", self.on_closing_live_window)
@@ -264,6 +265,8 @@ class BenchmarkApp:
             self.live_data_plot.set_title("Live CPU and RAM Usage")
             self.live_data_plot.set_ylabel("Usage (%)")
             self.live_data_plot.set_ylim(0, 100)
+            self.live_data_plot.set_xlabel("Time")
+
             self.live_data_plot.legend()
 
             self.live_data_canvas.draw()
