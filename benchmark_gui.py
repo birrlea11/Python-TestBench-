@@ -80,14 +80,15 @@ class BenchmarkApp:
 
 
         project_root = os.path.dirname(os.path.abspath(__file__))
-
+        pozele_mele = ["ciur_benchmark.png", "calculate_pi.png", "io_benchmark_cpu.png", "full_benchmark.png",
+                       "multicore_benchmark.png"]
         try:
             for root_dir, dirs, files in os.walk(project_root):
                 if '.venv' in root_dir or '__pycache__' in root_dir or '.git' in root_dir:
                     continue
 
                 for file in files:
-                    if file.endswith('.png'):
+                    if file in pozele_mele:
                         btn_text = f"Open {file}"
                         b = ttk.Button(live_button_frame, text=btn_text, command=lambda f=file: open_png(f))
                         b.pack(pady=2, anchor='n')

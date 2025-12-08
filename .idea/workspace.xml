@@ -7,11 +7,15 @@
     <list default="true" id="1e39e0d0-d9c4-4dfe-83c2-1107fdc093e3" name="Changes" comment="graphics with matplotlib">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CiurulLuiEratostene.py" beforeDir="false" afterPath="$PROJECT_DIR$/CiurulLuiEratostene.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/benchmark_gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/benchmark_gui.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/calculPi.py" beforeDir="false" afterPath="$PROJECT_DIR$/calculPi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/calculate_pi.png" beforeDir="false" afterPath="$PROJECT_DIR$/calculate_pi.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ciur_benchmark.png" beforeDir="false" afterPath="$PROJECT_DIR$/ciur_benchmark.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/full_benchmark.png" beforeDir="false" afterPath="$PROJECT_DIR$/full_benchmark.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/io_benchmark.py" beforeDir="false" afterPath="$PROJECT_DIR$/io_benchmark.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/io_benchmark_cpu.png" beforeDir="false" afterPath="$PROJECT_DIR$/io_benchmark_cpu.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/multi_core.py" beforeDir="false" afterPath="$PROJECT_DIR$/multi_core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/multicore_benchmark.png" beforeDir="false" afterPath="$PROJECT_DIR$/multicore_benchmark.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/utilities.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -95,6 +99,9 @@
       <workItem from="1764074277703" duration="1246000" />
       <workItem from="1764109063103" duration="5492000" />
       <workItem from="1764149498590" duration="1284000" />
+      <workItem from="1764158329633" duration="5753000" />
+      <workItem from="1764176005347" duration="127000" />
+      <workItem from="1765216722183" duration="3872000" />
     </task>
     <task id="LOCAL-00001" summary="GUI Mockup">
       <option name="closed" value="true" />
@@ -149,13 +156,13 @@
     <option name="LAST_COMMIT_MESSAGE" value="graphics with matplotlib" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/testbench$Main.coverage" NAME="Main Coverage Results" MODIFIED="1764149548306" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/testbench$io_benchmark.coverage" NAME="io_benchmark Coverage Results" MODIFIED="1764074362928" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/testbench$Main.coverage" NAME="Main Coverage Results" MODIFIED="1764165151606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/testbench$io_benchmark.coverage" NAME="io_benchmark Coverage Results" MODIFIED="1765229651954" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/testbench$benchmark_gui.coverage" NAME="benchmark_gui Coverage Results" MODIFIED="1764109103998" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/testbench$multi_core.coverage" NAME="multi_core Coverage Results" MODIFIED="1764019706011" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/testbench$calculPi.coverage" NAME="calculPi Coverage Results" MODIFIED="1764009406134" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/testbench$utilities.coverage" NAME="utilities Coverage Results" MODIFIED="1764114220744" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/testbench$multi_core.coverage" NAME="multi_core Coverage Results" MODIFIED="1765230060479" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/testbench$calculPi.coverage" NAME="calculPi Coverage Results" MODIFIED="1765218724218" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/testbench$utilities.coverage" NAME="utilities Coverage Results" MODIFIED="1765218485782" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/testbench$testare.coverage" NAME="testare Coverage Results" MODIFIED="1762951476604" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/testbench$CiurulLuiEratostene.coverage" NAME="CiurulLuiEratostene Coverage Results" MODIFIED="1764013180665" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/testbench$CiurulLuiEratostene.coverage" NAME="CiurulLuiEratostene Coverage Results" MODIFIED="1765218582157" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

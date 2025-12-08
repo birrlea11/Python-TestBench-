@@ -23,14 +23,14 @@ def monitor_cpu(stop_event, cpu_data_list):
 
 def run_all_benchmarks():
     #referinta laptopul meu
-    REF_TIME_INT = 0.830944
-    REF_TIME_FLOAT = 0.310641
-    REF_TIME_MULTI = 4.759809
+    REF_TIME_INT = 1.3816
+    REF_TIME_FLOAT = 1.684567
+    REF_TIME_MULTI = 8.222831
 
-    REF_IO_SEQ_WRITE = 94.34
-    REF_IO_SEQ_READ = 2422.12
-    REF_IO_RAND_WRITE = 1157.31
-    REF_IO_RAND_READ = 68875.74
+    REF_IO_SEQ_WRITE = 72.42
+    REF_IO_SEQ_READ = 1774.89
+    REF_IO_RAND_WRITE = 1078.44
+    REF_IO_RAND_READ = 53326.87
 
     MAX_SCORE_CPU = 250
     MAX_SCORE_FLOAT = 250

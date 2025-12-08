@@ -4,7 +4,10 @@ import multiprocessing
 import threading
 import matplotlib.pyplot as plt
 
-ITERATIONS_PER_CORE = 2_000_000
+ITERATIONS_PER_CORE = 20_000_000
+TOTAL_RUNS = 10
+SAMPLING_INTERVAL = 0.05
+
 
 def calculate_pi_leibniz(iterations):
     pi = 0.0
@@ -16,13 +19,15 @@ def calculate_pi_leibniz(iterations):
             pi -= term
     return pi * 4
 
+
 def monitor_cpu(stop_event, cpu_data_list):
     psutil.cpu_percent(interval=None)
-    while not stop_event.wait(timeout=0.1):
+    while not stop_event.wait(timeout=SAMPLING_INTERVAL):
         cpu_usage = psutil.cpu_percent(interval=None)
         cpu_data_list.append(cpu_usage)
 
-def run_multi_core_benchmark():
+
+def _execute_single_run():
     cpuPercent = []
     stop_event = threading.Event()
 
@@ -32,48 +37,63 @@ def run_multi_core_benchmark():
     )
     t1.start()
 
-    print("Pornire test de stres Multi-Core (Multiprocessing)...")
-    total_time = 0
+    core_count = psutil.cpu_count(logical=True)
+    iterations_list = [ITERATIONS_PER_CORE] * core_count
 
-    try:
-        core_count = psutil.cpu_count(logical=True)
-        print(f"S-au detectat {core_count} nuclee logice.")
-        print(f"Se pornesc {core_count} procese, fiecare va calcula Pi cu {ITERATIONS_PER_CORE:,} iterații.")
+    start_time = time.perf_counter()
 
-        iterations_list = [ITERATIONS_PER_CORE] * core_count
+    with multiprocessing.Pool(processes=core_count) as pool:
+        pool.map(calculate_pi_leibniz, iterations_list)
 
-        start_time = time.perf_counter()
-
-        with multiprocessing.Pool(processes=core_count) as pool:
-            pool.map(calculate_pi_leibniz, iterations_list)
-
-        end_time = time.perf_counter()
-        total_time = end_time - start_time
-
-        print("\n" + "=" * 30)
-        print("--- Rezultat Test Multi-Core ---")
-        print(f"Timp total pentru {core_count} nuclee: {total_time:.6f} secunde")
-        print("=" * 30)
-
-    except Exception as e:
-        print(f"A apărut o eroare în timpul testului multi-core: {e}")
+    end_time = time.perf_counter()
+    total_time = end_time - start_time
 
     stop_event.set()
     t1.join()
 
+    return cpuPercent, total_time
+
+
+def run_multi_core_benchmark():
+    all_cpu_runs = []
+    total_time_accumulated = 0
+
+    print(f"Se ruleaza Multi-Core Benchmark de {TOTAL_RUNS} ori...")
+    print(f"Sarcina per nucleu: {ITERATIONS_PER_CORE:,} iteratii.")
+
+    for i in range(TOTAL_RUNS):
+        print(f"Rularea {i + 1}...")
+        cpu_data, time_taken = _execute_single_run()
+        all_cpu_runs.append(cpu_data)
+        total_time_accumulated += time_taken
+
+    if not all_cpu_runs:
+        return 0
+
+    min_length = min(len(run) for run in all_cpu_runs)
+
+    average_cpu = []
+    for i in range(min_length):
+        total_val = sum(run[i] for run in all_cpu_runs)
+        average_cpu.append(total_val / TOTAL_RUNS)
+
     try:
         plt.figure(figsize=(10, 6))
-        plt.plot(cpuPercent)
+        plt.plot(average_cpu, label=f'Average CPU Usage ({TOTAL_RUNS} runs)')
         plt.ylabel('CPU Usage %')
-        plt.xlabel('Time')
-        plt.title('CPU Response to Multi-Core Benchmark')
+        plt.xlabel(f'Time (x {SAMPLING_INTERVAL} seconds)')
+        plt.title('Average CPU Response to Multi-Core Benchmark')
+        plt.legend()
         plt.savefig('multicore_benchmark.png')
         plt.show()
     except Exception:
         pass
 
-    return total_time
+    return total_time_accumulated / TOTAL_RUNS
+
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()
-    run_multi_core_benchmark()
+    avg_time = run_multi_core_benchmark()
+    print("-" * 30)
+    print(f"Timp mediu de executie (toate nucleele): {avg_time:.6f} secunde")

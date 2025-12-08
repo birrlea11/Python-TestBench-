@@ -3,8 +3,11 @@ import matplotlib.pyplot as plt
 import psutil
 import threading
 
-ITERATIONS_FLOAT_BENCHMARK = 2000000
-NUM_REPEATS_FLOAT = 10
+ITERATIONS_FLOAT_BENCHMARK = 10000000
+NUM_REPEATS_FLOAT = 1
+TOTAL_RUNS = 10
+SAMPLING_INTERVAL = 0.05
+
 
 def run_float_benchmark():
     SETUP_CODE = f"""
@@ -28,13 +31,15 @@ def calculate_pi_leibniz(iterations):
     )
     return min(times)
 
+
 def monitor_cpu(stop_event, cpu_data_list):
     psutil.cpu_percent(interval=None)
-    while not stop_event.wait(timeout=0.1):
+    while not stop_event.wait(timeout=SAMPLING_INTERVAL):
         cpu_usage = psutil.cpu_percent(interval=None)
         cpu_data_list.append(cpu_usage)
 
-def run_benchmark_and_plot():
+
+def _execute_single_run():
     cpuPercent = []
     stop_event = threading.Event()
 
@@ -44,23 +49,50 @@ def run_benchmark_and_plot():
     )
     t1.start()
 
-    result_time = run_float_benchmark()
+    time_taken = run_float_benchmark()
 
     stop_event.set()
     t1.join()
 
+    return cpuPercent, time_taken
+
+
+def run_benchmark_and_plot():
+    all_cpu_runs = []
+    total_time_accumulated = 0
+
+    print(f"Se ruleaza benchmark-ul de {TOTAL_RUNS} ori...")
+
+    for i in range(TOTAL_RUNS):
+        cpu_data, time_taken = _execute_single_run()
+        all_cpu_runs.append(cpu_data)
+        total_time_accumulated += time_taken
+
+    if not all_cpu_runs:
+        return 0
+
+    min_length = min(len(run) for run in all_cpu_runs)
+
+    average_cpu = []
+    for i in range(min_length):
+        total_val = sum(run[i] for run in all_cpu_runs)
+        average_cpu.append(total_val / TOTAL_RUNS)
+
     try:
         plt.figure(figsize=(10, 6))
-        plt.plot(cpuPercent)
+        plt.plot(average_cpu, label=f'Average CPU Usage ({TOTAL_RUNS} runs)')
         plt.ylabel('CPU Usage %')
-        plt.xlabel('Time (x 0.1 seconds)')
-        plt.title('CPU Response to Benchmark')
+        plt.xlabel(f'Time (x {SAMPLING_INTERVAL} seconds)')
+        plt.title('Average CPU Response to Benchmark')
+        plt.legend()
         plt.savefig('calculate_pi.png')
         plt.show()
     except Exception:
         pass
 
-    return result_time
+    return total_time_accumulated / TOTAL_RUNS
+
 
 if __name__ == "__main__":
-    print(run_benchmark_and_plot())
+    avg_time = run_benchmark_and_plot()
+    print(f"Timp mediu de executie: {avg_time}")
